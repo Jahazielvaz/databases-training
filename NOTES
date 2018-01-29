@@ -1,0 +1,53 @@
+POSTGRESQL: Is an object-RDBMS(Relational Database Management System). It has open source, which is released under the permissive PostgresSQL License.
+
+INSTALLING POSTGRES:
+  brew install postgresql
+
+BEING ABLE TO RECALL POSTGRES FROM WITHIN HOMEBREW: I don't fully understand this, but from what I understand, in order for you to run postgreSQL,
+  After it's been installed, apparently it's a Homebrew Background Service (We'll look deeper into this).
+
+  LAUNCHCTL: Loads and unloads services that start at login (I think postgresql is one such service.)
+    In OS X, these services are represented by files ending with .plist (Stands for Property List) These
+    plists are usually stored in either ~/Library/LaunchAgents or /Library/LaunchAgents. You load them
+    (i.e. tell them to start at login) with launchctl load $PATH_TO_LIST and unload them with launchctl
+    unload $PATH_TO_LIST. Loading a plist tells the program it represents (e.g. redis) to start at login,
+    while unloading it tells the program not to start at login.
+
+    NOTE: To launch it this way, you need to know where Homebrew plists are. Homebrew includes an interface for managing this without using ln, launchctl or knowing where plists are.
+
+    CODE FOR USING THE INTERFACE:
+      ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+      launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+
+    INSTALL BREW SERVICES: homebrew/services one time.
+
+    STARTING POSTGRESQL:
+      EXAMPLE:
+        brew services start mysql
+
+
+PSQL COMMAND LIST:
+-GOING INTO POSTGRES MODE: psql postgres
+-COMMANDING THE HOST WE WANT TO CONNECT TO: -h
+-COMMANDING THE USER WE WANT TO CONNECT WITH: -U
+-COMMANDING THE POST WE WANT TO CONNECT TO(default is 5432): -p
+  QUERYING: PUTTING IT ALL TOGETHER: psql -h localhost -U desiredUserName -p 4000 databasename
+
+    OPTION 2- USING THE FULL STRING AND LETTING PSQL PARSE IT:
+      EXAMPLE: psql "dbname=dbhere host=hosthere user=userhere password=pwhere port=5432 ssl"
+
+-LIST OF ALL AVAILABLE COMMANDS: \?
+-TURNING QUERY TIMING ON(In milliseconds): \timing
+-LIST TABLES IN DATABASE: \d
+-DESCRIBE A TABLE: \d employees       //table name. This whole content doesn't go in the command.
+-LIST ALL TABLES IN DATABASE ALONG WITH SOME ADDITIONAL INFORMATION: \d+
+-DESCRIBE A TABLE WITH ADDITIONAL INFORMATION: \d+ users
+-LIST ALL DATABASES: \l
+-LIST ALL DATABASES WITH ADDITIONAL INFORMATION: \l+
+-LIST ALL SCHEMAS: \dn
+-LIST ALL SCHEMAS WITH ADDITIONAL INFORMATION: \dn+
+-LIST ALL FUNCTIONS: \df
+-LIST ALL FUNCTIONS WITH ADDITIONAL INFORMATION: \df+
+-CONNECT TO ANOTHER DATABASE: \c dbname
+-QUIT FROM POSTGRES SHELL: \q
+-TEXT EDITOR INSIDE PSQL (This is pretty handy for query modifications): \e
