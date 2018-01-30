@@ -36,18 +36,55 @@ PSQL COMMAND LIST:
     OPTION 2- USING THE FULL STRING AND LETTING PSQL PARSE IT:
       EXAMPLE: psql "dbname=dbhere host=hosthere user=userhere password=pwhere port=5432 ssl"
 
--LIST OF ALL AVAILABLE COMMANDS: \?
--TURNING QUERY TIMING ON(In milliseconds): \timing
+-CHANGE TO POSTGRES USER AND OPEN PSQL PROMPT: sudo -u postgres psql postgres
+
+ROLES
+-CREATE ROLE: CREATE ROLE desiredrolename WITH LOGIN ENCRYPTED PASSWORD 'passwordname' CREATEDB;
+-CREATE ROLE WITH MULTIPLE PRIVILEGES: CREATE ROLE desiredrolename WITH LOGIN ENCRYPTED PASSWORD
+   'passwordname' CREATEDB CREATEROLE REPLICATION SUPERUSER;
+-ALTER ROLE: ALTER ROLE desiredrolename CREATEROLE CREATEDB REPLICATION SUPERUSER;
+-DROP ROLE: DROP ROLE desiredrole;
+
+DATABASES
+-CREATE DATABASE: CREATE DATABASE dbname WITH OWNER chosenrole ENCODING 'UTF8';
+-GRANT PRIVILEGES TO NEW USER: GRANT ALL PRIVILEGES ON DATABASE dbname TO selectrole
+-DROP DATABASE: DROP DATABASE databasename;
+-CONNECT TO DATABASE: \c dbname
+
+TABLES
+-CREATING A TABLE: CREATE TABLE tableName(id serial PRIMARY KEY, desiredColName1 datatype, desiredColName2 datatype)
+  FURTHER EXPLANATION: You first name the table, and in the parenthesis, you have fields separated by commas.
+    You should always put id serial PRIMARY KEY: The purpose of this is to have it automatically give each row an id by increments of 1.
+    After this you put your column name and the datatype you wish to give it (see list of datatypes)
 -LIST TABLES IN DATABASE: \d
+-LIST TABLES IN CONNECTED DATABASE: \dt
 -DESCRIBE A TABLE: \d employees       //table name. This whole content doesn't go in the command.
 -LIST ALL TABLES IN DATABASE ALONG WITH SOME ADDITIONAL INFORMATION: \d+
 -DESCRIBE A TABLE WITH ADDITIONAL INFORMATION: \d+ users
+
+LISTING
 -LIST ALL DATABASES: \l
 -LIST ALL DATABASES WITH ADDITIONAL INFORMATION: \l+
+-LIST ROLES: postgres=# \du
+-LIST OF ALL AVAILABLE COMMANDS: \?
+-TURNING QUERY TIMING ON(In milliseconds): \timing
 -LIST ALL SCHEMAS: \dn
 -LIST ALL SCHEMAS WITH ADDITIONAL INFORMATION: \dn+
 -LIST ALL FUNCTIONS: \df
--LIST ALL FUNCTIONS WITH ADDITIONAL INFORMATION: \df+
--CONNECT TO ANOTHER DATABASE: \c dbname
+
+
+MISC
 -QUIT FROM POSTGRES SHELL: \q
 -TEXT EDITOR INSIDE PSQL (This is pretty handy for query modifications): \e
+
+
+WEBSITES I'M USING
+http://postgresguide.com/utilities/psql.html
+
+http://www.cheat-sheets.org/sites/sql.su/
+
+https://www.postgresql.org/docs/8.1/static/sql-createtable.html
+
+https://www.youtube.com/watch?v=ghTksCsFBcI&list=PLnDmCSiFuXf2XOJJdUg__5tNtpy0bjekc
+
+https://nycda.instructure.com/courses/39/files/4406?module_item_id=3397
